@@ -18,12 +18,9 @@ The last 6 bits are reserved for future use including "non broadcast mode"
 --- | --- | --- | ---
 Node ID | Message ID | Message Data | Reserved
 
-# Special Cases
+### Special Cases
 
-These messages are for the setup of a device on the network
+In the inital setup of the RS485 network there are special messages that do not follow in the normal
 
-### 01 : Generate ID
-When this message if recieved it will generate 
-
-### 02 : Set ID
-When this message is receive
+### 00 : Reserved for Empty Messages
+This is reserved for empty messages, this is not a valid message. This is the inital state of the message buffer, so it is defined as nothing.
