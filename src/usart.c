@@ -20,15 +20,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
 
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
 UART_HandleTypeDef huart1;
 DMA_HandleTypeDef hdma_usart1_rx;
 DMA_HandleTypeDef hdma_usart1_tx;
-
-/* USART1 init function */
 
 void MX_USART1_UART_Init(void)
 {
@@ -66,7 +60,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(uartHandle->Instance==USART1)
   {
-  /* USER CODE BEGIN USART1_MspInit 0 */
+  /* USER CODE BEGIN USART1_MspInit 0 /home/bunn/Documents/stm32Configurations/PhREC/Core/inc /home/bunn/Documents/stm32Configurations/PhREC/Core/src*/
 
   /* USER CODE END USART1_MspInit 0 */
     /* USART1 clock enable */
@@ -155,7 +149,13 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
   }
 }
 
-/* USER CODE BEGIN 1 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  // Execution enters here when DMA buffer is 100% full
+  HAL_UART_Receive_DMA(huart, huart->hdmarx, huart->Init.WordLength);
+}
 
-/* USER CODE END 1 */
-
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+{
+  // Execution enters here when DMA buffer is 50% full
+}
