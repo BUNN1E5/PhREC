@@ -1,6 +1,6 @@
 # Network Initalization Protocol
 
-When initalizing the PhREC network we need to have a method to prevent each node from talking over eachother. To prevent this each node is given a Unique ID and from that ID a wait time is derived to be used on responses from broadcast messages. Most messages are broadcast so this should be fine for us.
+When initalizing the PhREC network we need to have a method to prevent each node from talking over eachother. To prevent this, each node is given a Unique ID and from that ID a wait time is derived to be used on responses from broadcast messages. Most messages are broadcast so this should be fine for us.
 
 The network setup is done in a couple steps:
 
@@ -10,7 +10,7 @@ The manager broadcasts a message to all nodes requesting them to repond with 16b
 
 ## Registration
 
-Each node then waits for a time derived by their unique ID, and informs the manager and every other node of it's ID. 
+Each node then waits for a time derived by their Hardware ID, and informs the manager and every other node of it's Hardware ID. 
 
 ## Collision Validation
 
