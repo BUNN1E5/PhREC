@@ -45,7 +45,7 @@ Config States:
 - 11 : Undefined
 
 ### 2 : Assign Node ID
-0:5 (6b) | 6:13 (8b) | 14:29 (16b) | 30:31(2b)
+0:5 (6b) | 6:13 (8b) | 14:29 (16b) | 30:31 (2b)
 --- | --- | --- | ---
 000010 | Node ID | Hardware ID | Undefined 
 
@@ -84,7 +84,7 @@ Configuration State:
 Requests the total number of sensors on the target node
 
 ### 10 : Request Sensor Data
-0:5 (6b) | 6:13 (8b) | 14:21 (8b) | 21:31
+0:5 (6b) | 6:13 (8b) | 14:21 (8b) | 22:31 (10b)
 --- | --- | --- | --- 
 000111 | Node ID | Sensor Depth | Undefined
 
@@ -93,13 +93,20 @@ Requests the sensor data from a specific target node up to a designated maximum 
 Each sensor will send its own [-11 : Sensor Data Response](#-11--sensor-data-response)
 
 ### 11 : Request Sensor Data Stream
-0:5 (6b) | 6:13 (8b) | 14:21 (8b) | 21:31
+0:5 (6b) | 6:13 (8b) | 14:21 (8b) | 22:31 (10b)
 --- | --- | --- | --- 
 000111 | Node ID | Sensor Depth | Undefined
 
 Requests the sensor data from a specific target node up to a designated maximum number of sensors defined by sensor depth.
 
 Each sensor will send a single [-12 : Sensor Stream Header](#-12--sensor-stream-header) and then a [-13 : Sensor Stream Data](#-13--sensor-stream-data) for each sensor
+
+### 20 : Request Motor Impulse
+0:5 (6b) | 6:13 (8b) | 14:31 (18b)
+--- | --- | ---
+010100 | Node ID | Motor Strength
+
+Requests the node send a impulse to its motor
 
 ## Responses
 
