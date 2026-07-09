@@ -135,42 +135,42 @@ typedef union {
     SensorStreamData sensorStreamData;
 } Message;
 
-int HandleMessage(Message *msg);
+typedef int MessageHandler(Message *msg);
 
-typedef int (*MessageHandler)(Message *msg);
+int Message_Handler(Message *msg);
 
-int HandleHardwareId(Message *msg);
-int HandleAssignNodeId(Message *msg);
-int HandleValidateNodeIds(Message *msg);
-int HandleRandomizeNodeIds(Message *msg);
-int HandleRequestSensorDepth(Message *msg);
-int HandleRequestSensorData(Message *msg);
-int HandleRequestSensorDataStream(Message *msg);
-int HandleRequestMotorImpulse(Message *msg);
+int Hardware_Id_Handler(Message *msg);
+int Assign_Node_Id_Handler(Message *msg);
+int Validate_Node_Ids_Handler(Message *msg);
+int Randomize_Node_Ids_Handler(Message *msg);
+int Request_Sensor_Depth_Handler(Message *msg);
+int Request_Sensor_Data_Handler(Message *msg);
+int Request_Sensor_Data_Stream_Handler(Message *msg);
+int Request_Motor_Impulse_Handler(Message *msg);
 
-int HandleHardwareIdResponse(Message *msg);
-int HandleSensorDepthResponse(Message *msg);
-int HandleSensorDataResponse(Message *msg);
-int HandleValidateNodeIdResponse(Message *msg);
-int HandleRandomizedNodeIdResponse(Message *msg);
-int HandleSensorStreamHeader(Message *msg);
-int HandleSensorStreamData(Message *msg);
+int Hardware_Id_Response_Handler(Message *msg);
+int Assign_Node_Id_Response_Handler(Message *msg);
+int Validate_Node_Ids_Response_Handler(Message *msg);
+int Randomize_Node_Ids_Response_Handler(Message *msg);
+int Request_Sensor_Depth_Response_Handler(Message *msg);
+int Request_Sensor_Data_Response_Handler(Message *msg);
+int Request_Sensor_Data_Stream_Response_Handler(Message *msg);
+int Request_Motor_Impulse_Response_Handler(Message *msg);
 
-MessageHandler message_handlers[64]{
-    [1] = HandleHardwareId,
-    [63 - 1] = HandleHardwareIdResponse,
-    [2] = HandleAssignNodeId,
-    [63 - 2] = HandleSensorDepthResponse,
-    [3] = HandleValidateNodeIds,
-    [63 - 3] = HandleSensorDataResponse,
-    [4] = HandleRandomizeNodeIds,
-    [63 - 4] = HandleValidateNodeIdResponse,
-    [5] = HandleRequestSensorDepth,
-    [63 - 5] = HandleSensorDepthResponse,
-    [10] = HandleRequestSensorData,
-    [63 - 10] = HandleSensorDataResponse,
-    [11] = HandleRequestSensorDataStream,
-    [63 - 11] = HandleSensorStreamHeader,
-    [63 - 12] = HandleSensorStreamData,
-    [20] = HandleRequestMotorImpulse
+MessageHandler *message_handlers[64] = {
+    [1] = Hardware_Id_Handler,
+    [63 - 1] = Hardware_Id_Response_Handler,
+    [2] = Assign_Node_Id_Handler,
+    [63 - 2] = Assign_Node_Id_Response_Handler,
+    [3] = Validate_Node_Ids_Handler,
+    [63 - 3] = Validate_Node_Ids_Response_Handler,
+    [4] = Randomize_Node_Ids_Handler,
+    [63 - 4] = Randomize_Node_Ids_Response_Handler,
+    [5] = Request_Sensor_Depth_Handler,
+    [63 - 5] = Request_Sensor_Depth_Response_Handler,
+    [10] = Request_Sensor_Data_Handler,
+    [63 - 10] = Request_Sensor_Data_Response_Handler,
+    [11] = Request_Sensor_Data_Stream_Handler,
+    [63 - 11] = Request_Sensor_Data_Stream_Response_Handler,
+    [20] = Request_Motor_Impulse_Handler,
 };

@@ -152,6 +152,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   // Execution enters here when DMA buffer is 100% full
+
+  //Restart DMA receive
   HAL_UART_Receive_DMA(huart, huart->hdmarx, huart->Init.WordLength);
 }
 
