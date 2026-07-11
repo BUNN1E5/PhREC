@@ -156,14 +156,14 @@ The number of sensors on a given Node ID
 A single sensor's data from a given Node ID
 
 ### -12 : Sensor Stream Header
-0:5 (6b) | 6:13 (8b) | 14:31 (18b)
+0:5 (6b) | 6:13 (8b) | 14:27 (14b) | 28:31 (4b)
 --- | --- | --- 
-110101 | Node ID | Sensor Count
+110101 | Node ID | Sensor Group | Sensor Count
 
-Start signal for all sensor data
+Start signal for all sensor data in group (16 sensors per group, which should be overkill in most cases) 
 
 ### -13 : Sensor Stream Data
-0:5 (6b) | 6:13 (8b) | 14:31 (18b)
+0:5 (6b) | 6:9 (4b) | 10:31 (22b)
 --- | --- | --- 
 110110 | Sensor ID | Sensor Data
 

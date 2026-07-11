@@ -1,7 +1,6 @@
 
 #include <stdint.h>
 
-
 //Request Messages
 typedef struct {
     uint32_t message_id : 6;
@@ -101,8 +100,8 @@ typedef struct {
 
 typedef struct {
     uint32_t message_id : 6;
-    uint32_t sensor_id : 8;
-    uint32_t sensor_data : 18;
+    uint32_t sensor_id : 4;
+    uint32_t sensor_data : 22;
 } SensorStreamData;
 
 //Basic Message Structure
@@ -135,42 +134,24 @@ typedef union {
     SensorStreamData sensorStreamData;
 } Message;
 
-typedef int MessageHandler(Message *msg);
+typedef Message (*MessageHandler)(Message msg);
 
-int Message_Handler(Message *msg);
+Message Message_Handler(Message msg);
 
-int Hardware_Id_Handler(Message *msg);
-int Assign_Node_Id_Handler(Message *msg);
-int Validate_Node_Ids_Handler(Message *msg);
-int Randomize_Node_Ids_Handler(Message *msg);
-int Request_Sensor_Depth_Handler(Message *msg);
-int Request_Sensor_Data_Handler(Message *msg);
-int Request_Sensor_Data_Stream_Handler(Message *msg);
-int Request_Motor_Impulse_Handler(Message *msg);
+Message Hardware_Id_Handler(Message msg);
+Message Assign_Node_Id_Handler(Message msg);
+Message Validate_Node_Ids_Handler(Message msg);
+Message Randomize_Node_Ids_Handler(Message msg);
+Message Request_Sensor_Depth_Handler(Message msg);
+Message Request_Sensor_Data_Handler(Message msg);
+Message Request_Sensor_Data_Stream_Handler(Message msg);
+Message Request_Motor_Impulse_Handler(Message msg);
 
-int Hardware_Id_Response_Handler(Message *msg);
-int Assign_Node_Id_Response_Handler(Message *msg);
-int Validate_Node_Ids_Response_Handler(Message *msg);
-int Randomize_Node_Ids_Response_Handler(Message *msg);
-int Request_Sensor_Depth_Response_Handler(Message *msg);
-int Request_Sensor_Data_Response_Handler(Message *msg);
-int Request_Sensor_Data_Stream_Response_Handler(Message *msg);
-int Request_Motor_Impulse_Response_Handler(Message *msg);
-
-MessageHandler *message_handlers[64] = {
-    [1] = Hardware_Id_Handler,
-    [63 - 1] = Hardware_Id_Response_Handler,
-    [2] = Assign_Node_Id_Handler,
-    [63 - 2] = Assign_Node_Id_Response_Handler,
-    [3] = Validate_Node_Ids_Handler,
-    [63 - 3] = Validate_Node_Ids_Response_Handler,
-    [4] = Randomize_Node_Ids_Handler,
-    [63 - 4] = Randomize_Node_Ids_Response_Handler,
-    [5] = Request_Sensor_Depth_Handler,
-    [63 - 5] = Request_Sensor_Depth_Response_Handler,
-    [10] = Request_Sensor_Data_Handler,
-    [63 - 10] = Request_Sensor_Data_Response_Handler,
-    [11] = Request_Sensor_Data_Stream_Handler,
-    [63 - 11] = Request_Sensor_Data_Stream_Response_Handler,
-    [20] = Request_Motor_Impulse_Handler,
-};
+Message Hardware_Id_Response_Handler(Message msg);
+Message Assign_Node_Id_Response_Handler(Message msg);
+Message Validate_Node_Ids_Response_Handler(Message msg);
+Message Randomize_Node_Ids_Response_Handler(Message msg);
+Message Request_Sensor_Depth_Response_Handler(Message msg);
+Message Request_Sensor_Data_Response_Handler(Message msg);
+Message Request_Sensor_Data_Stream_Response_Handler(Message msg);
+Message Request_Motor_Impulse_Response_Handler(Message msg);
