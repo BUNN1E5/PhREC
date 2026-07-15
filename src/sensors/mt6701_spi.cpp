@@ -6,8 +6,7 @@
 SPISettings spiSettings(1000000, MSBFIRST, SPI_MODE0);
 const PinName spiPins = {
     PA_7,
-    PA_6,
-    PA_5
+    PA_6
 };
 
 Sensor::Sensor(int sensor_id, int group_id) {
