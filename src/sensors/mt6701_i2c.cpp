@@ -1,4 +1,10 @@
 #include "sensors.h"
+#include <Arduino.h>
+
+const PinName mt6701_i2c_pins[] = {
+    PB_6,  // SCL
+    PB_7   // SDA
+};
 
 static Sensor Init(int sensor_id, int group_id) {
     Sensor sensor;

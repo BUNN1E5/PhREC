@@ -73,7 +73,6 @@ const uint32_t analogInputPin[] = {
     PB_0, PB_1
 };
 
-
 #ifdef __cplusplus
 }
 #endif
