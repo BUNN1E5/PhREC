@@ -77,6 +77,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle){
       Error_Handler();
     }
 
+    HAL_UART_RegisterCallback(uartHandle, HAL_UART_RX_COMPLETE_CB_ID, UART_RxCpltCallback);
     __HAL_DMA_REMAP_CHANNEL_ENABLE(DMA_REMAP_USART1_RX_DMA_CH5);
 
     __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart1_rx);
@@ -120,7 +121,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle){
   }
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+void UART_RxCpltCallback(UART_HandleTypeDef *huart){
   // Execution enters here when DMA buffer is 100% full
 
   // Handle Message Protocol
