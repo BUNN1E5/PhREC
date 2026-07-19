@@ -1,20 +1,67 @@
 #include <Arduino.h>
+#include <SimpleFOC.h>
 
-// put function declarations here:
-int myFunction(int, int);
+//PWM Pins (TIM1 or IN1, IN2, IN3)
+const PinName driverPins[] = {
+    PB_13, PB_14, PB_15
+};
+
+const PinName mt6701_spi_pins[] = {
+    PA_6,  // MISO
+    PA_5,  // SCK
+};
+
+BLDCDriver3PWM driver = BLDCDriver3PWM(driverPins[0], driverPins[1], driverPins[2]);
+
+// MagneticSensorSPI(int cs, float _cpr, int _angle_register, long _clock_speed)
+//  cs              - SPI chip select pin 
+//  bit_resolution - magnetic sensor resolution
+//  angle_register  - (optional) angle read register - default 0x3FFF
+//  clock_speed      - (optional) SPI clock speed - default 1MHz
+MagneticSensorSPI sensor = MagneticSensorSPI(mt6701_spi_pins[0], mt6701_spi_pins[1]);
+
+//  BLDCMotor(int pp, (optional R, KV, Lq, Ld))
+//  - pp  - pole pair number
+//  - R   - phase resistance value [Ohm] - optional
+//  - KV  - motor KV rating [rpm/V] - optional
+BLDCMotor motor = BLDCMotor(7, 11.2, 140);
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  pinMode(PB_2, OUTPUT);
+  pinMode(PB_10, OUTPUT);
+
+  digitalWrite(PB_2, HIGH); //Turn off RED led
+  digitalWrite(PB_10, LOW); //Turn on WHITE led 
+  delay(1000);
+
+  digitalWrite(PB_2, LOW); //Turn on RED led
+  digitalWrite(PB_10, HIGH); //Turn off WHITE led 
+  delay(1000);
+
+
+  sensor.spi_mode = SPI_MODE2;
+  sensor.clock_speed = 1000000;
+  sensor.init();
+
+  driver.voltage_power_supply = 12;
+  driver.init();
+
+  motor.linkSensor(&sensor);
+  motor.linkDriver(&driver);
+
+  motor.controller =  MotionControlType::velocity;
+
+  motor.init();
+  motor.initFOC();
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  sensor.update();
+  motor.loopFOC();
+
+  motor.move(1.0);
 }
 
 #ifdef __cplusplus
