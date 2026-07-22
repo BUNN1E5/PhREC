@@ -3,7 +3,10 @@
 
 //PWM Pins (TIM1 or IN1, IN2, IN3)
 const PinName driverPins[] = {
-    PB_13, PB_14, PB_15
+    PB_13, //TIM1_1N
+    PB_14, //TIM1_2N
+    PB_15, //TIM1_3N
+    PA_8 //EN
 };
 
 const PinName mt6701_spi_pins[] = {
@@ -11,14 +14,14 @@ const PinName mt6701_spi_pins[] = {
     PA_5,  // SCK
 };
 
-BLDCDriver3PWM driver = BLDCDriver3PWM(driverPins[0], driverPins[1], driverPins[2]);
+BLDCDriver3PWM driver = BLDCDriver3PWM(driverPins[0], driverPins[1], driverPins[2], driverPins[3]);
 
 // MagneticSensorSPI(int cs, float _cpr, int _angle_register, long _clock_speed)
 //  cs              - SPI chip select pin 
 //  bit_resolution - magnetic sensor resolution
 //  angle_register  - (optional) angle read register - default 0x3FFF
 //  clock_speed      - (optional) SPI clock speed - default 1MHz
-MagneticSensorSPI sensor = MagneticSensorSPI(mt6701_spi_pins[0], mt6701_spi_pins[1]);
+//MagneticSensorSPI sensor = MagneticSensorSPI(mt6701_spi_pins[0], mt6701_spi_pins[1]);
 
 //  BLDCMotor(int pp, (optional R, KV, Lq, Ld))
 //  - pp  - pole pair number
@@ -30,26 +33,28 @@ void setup() {
   pinMode(PB_2, OUTPUT);
   pinMode(PB_10, OUTPUT);
 
-  digitalWrite(PB_2, HIGH); //Turn off RED led
-  digitalWrite(PB_10, LOW); //Turn on WHITE led 
-  delay(1000);
-
   digitalWrite(PB_2, LOW); //Turn on RED led
   digitalWrite(PB_10, HIGH); //Turn off WHITE led 
   delay(1000);
 
+  digitalWrite(PB_2, HIGH); //Turn off RED led
+  digitalWrite(PB_10, LOW); //Turn on WHITE led 
+  delay(1000);
 
-  sensor.spi_mode = SPI_MODE2;
-  sensor.clock_speed = 1000000;
-  sensor.init();
+
+  //sensor.spi_mode = SPI_MODE2;
+  //sensor.clock_speed = 1000000;
+  //sensor.init();
 
   driver.voltage_power_supply = 12;
+  driver.voltage_limit = 12;
   driver.init();
 
-  motor.linkSensor(&sensor);
+  //motor.linkSensor(&sensor);
   motor.linkDriver(&driver);
 
-  motor.controller =  MotionControlType::velocity;
+  motor.controller =  MotionControlType::velocity_openloop;
+  motor.voltage_limit = 12;
 
   motor.init();
   motor.initFOC();
@@ -58,10 +63,10 @@ void setup() {
 
 void loop() {
 
-  sensor.update();
+  //sensor.update();
   motor.loopFOC();
 
-  motor.move(1.0);
+  motor.move(5.0);
 }
 
 #ifdef __cplusplus
