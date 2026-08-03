@@ -1,3 +1,5 @@
+# THIS IS OUT OF DATE. I WILL FIX THIS AFTER MESSAGES.MD IS ACCURATE
+
 # Network Initalization Protocol
 
 When initalizing the PhREC network we need to have a method to prevent each node from talking over eachother. To prevent this, each node is given a Unique ID and from that ID a wait time is derived to be used on responses from broadcast messages. Most messages are broadcast so this should be fine for us.
