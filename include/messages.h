@@ -138,7 +138,7 @@ typedef Message (*MessageHandler)(Message msg);
 
 Message Message_Handler(Message msg);
 
-Message Hardware_Id_Handler(Message msg);
+Message Request_Hardware_Id_Handler(Message msg);
 Message Assign_Node_Id_Handler(Message msg);
 Message Validate_Node_Ids_Handler(Message msg);
 Message Randomize_Node_Ids_Handler(Message msg);

@@ -1,7 +1,7 @@
 #include "messages.h"
 
 MessageHandler message_handlers[64] = {
-    // [1] = Hardware_Id_Handler,
+    [1] = Request_Hardware_Id_Handler,
     // [63 - 1] = Hardware_Id_Response_Handler,
     // [2] = Assign_Node_Id_Handler,
     // [63 - 2] = Assign_Node_Id_Response_Handler,
