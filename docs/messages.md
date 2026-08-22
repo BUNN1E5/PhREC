@@ -11,22 +11,15 @@ Messages are split into 2 different types, [Requests](#requests) and [Responses]
 For example, if a node receives a Request Hardware ID (Message ID 1 or 000001), the bitwise NOT (~) response is 111110, or -2, representing the Hardware ID Response.
 
 ## Broadcast & Addressing
+Each node has a 8 bit NodeID, this can be used to send a message to a specific node.
 
-When a node receives a message it will first check if the message data (the first 24bits) matches the CRC-8 in tail end of the message. If succeeds then we know that the message is valid a no curruption occurred and we receieve it.
+When a node recieves a message it will first check its validity, by comparing the CRC-8 in the last 8 bits of the message with the calculated crc-8 from the first 24 bits XORed by a NodeID. If it is valid, the node accepts the message.
 
-$$\text{CRC-8} \equiv \text{crc-8}(MessageData)$$
-
-However sometimes we want to send messages to specific nodes rather than broadcasting. We can do this by leveraging the CRC that is defined in all messages. To send a message to a specific node:
-
-$$\text{Target-CRC} = \text{CRC-8} \oplus \text{NodeID}$$
-
-The $\text{Target-CRC}$ is actually sent over the network. To check if a message was for this node specifically we just need to do the same operation on $\text{Target-CRC}$.
-
-$$\text{Target CRC} \equiv \text{crc-8}(MessageData) \oplus \text{NodeID}$$
-
+$$\text{CRC-8} \equiv \text{crc-8}(MessageData) \oplus \text{NodeID}$$
 
 NodeID `000` is reserved for broadcast messages because $\text{CRC-8} \oplus \text{0} \equiv \text{CRC-8}$
 
+A node will accept messages with its NodeID or `000`.
 If a message isnt able to pass one of these checks then the message is simply dropped and ignored.
 
 ## Crosstalk
