@@ -2,9 +2,25 @@
 
 
 ## Message Layout
+
+
 0:5 (6b) | 6:23 (18b) | 24:31 (8b)
 --- | :--: | ---
 Message ID | Data Fields | CRC-8
+
+$$
+\begin{array}{|c|c|c|}
+\hline
+\text{0:5 (6b)} & \text{0:5 (6b)} & \text{0:5 (6b)} \\
+\hline
+\text{Message ID} & \text{Data Fields} & \text{CRC-8} \\
+\hline
+\end{array}
+$$
+
+
+<sub>which of these look better?, cause if the laTex one does then we can change it</sub>
+
 
 Messages are split into 2 different types, [Requests](#requests) and [Responses](#responses). As a general rule, the Response to a Request is exactly the bitwise NOT (~) of the Request Message ID
 
@@ -196,7 +212,7 @@ Identical to [-4 : Validate Node ID Response](#-4--validate-node-id-response)
 **Response to:** [4 : Randomize Node IDs](#4--randomize-node-ids)
 
 ## -6 : Sensor Depth Response
-0:5 (6b) | 6:23 (18b) | 24:31 (8b)
+0:5 (6b) | 6:13 (8b) | 14:23(10b) | 24:31 (8b)
 --- | --- | --- 
 110100 | Sensor Depth | CRC-8
 
