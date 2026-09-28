@@ -51,10 +51,11 @@ SensorStreamData MT6701_SPI::getData() {
     //We only want 6 bits of b
     uint32_t sensor_data = (a << 6) | (b >> 2);
 
-    SensorStreamData data;
+    SensorDataResponse data;
     data.message_id = -13; // Defined in messages.md
-    data.sensor_id = this->id;
+    //data.sensor_id = this->id;
     data.sensor_data = sensor_data; // data.sensor_data is 18 bits the crc is truncated
+    
     digitalWrite(nss_pin, HIGH);
     SPI.endTransaction();
 
