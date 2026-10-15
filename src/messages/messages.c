@@ -3,7 +3,7 @@
 MessageHandler message_handlers[64] = {
     [1] = Request_Hardware_Id_Handler,
     // [63 - 1] = Hardware_Id_Response_Handler,
-    // [2] = Assign_Node_Id_Handler,
+    [2] = Assign_Node_Id_Handler,
     // [63 - 2] = Assign_Node_Id_Response_Handler,
     // [3] = Validate_Node_Ids_Handler,
     // [63 - 3] = Validate_Node_Ids_Response_Handler,

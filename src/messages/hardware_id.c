@@ -16,11 +16,10 @@ Message Request_Hardware_Id_Handler(Message msg){
 
     Message response;
     response.hardwareIdResponse.message_id = 63 - 1;
-    response.hardwareIdResponse.node_id = 0;
     response.hardwareIdResponse.hw_id = crc;
+    response.hardwareIdResponse.crc8 = crc8(response.body.data, sizeof(response.body));
     return response;
 }
 
-Message Hardware_Id_Response_Handler(Message msg){
-    return msg;
-}
+//Responses are not implemented on PHRec Node atm so echo msg
+Message Hardware_Id_Response_Handler(Message msg){ return msg; }

@@ -133,6 +133,11 @@ typedef union {
         uint32_t message_id : 6;
     } header;
 
+    //First 24 bits of our message, useful for crc-8 calculation
+    struct{
+        uint8_t body[3];
+    } body;
+
     //Request Messages
     RequestHardwareId requestHardwareId;
     
