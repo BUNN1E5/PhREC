@@ -135,7 +135,7 @@ typedef union {
 
     //First 24 bits of our message, useful for crc-8 calculation
     struct{
-        uint8_t body[3];
+        uint8_t data[3];
     } body;
 
     //Request Messages
